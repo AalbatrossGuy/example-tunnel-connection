@@ -1,0 +1,19 @@
+Linux Routing Instructions:
+
+# On server
+echo 1 > /proc/sys/net/ipv4/ip_forward
+iptables -t nat -A POSTROUTING -s 10.0.0.0/24 -j MASQUERADE
+
+# On client (optional, for full internet routing)
+ip route add default via 10.0.0.1 dev tun0
+Execution:
+
+Run server first: sudo python3 tun_server.py
+Run client: sudo python3 tun_client.py
+Notes:
+
+Requires root/sudo
+No encryption (raw tunnel)
+Basic packet forwarding
+Replace SERVER_IP with actual server IP
+Error handling minimalistic for clarity
